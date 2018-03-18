@@ -3,6 +3,7 @@ package io.zipcoder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.CORBA.IRObject;
 
 import java.util.ArrayList;
 
@@ -59,4 +60,59 @@ public class ItemParserTest {
         Integer actual = itemParser.findKeyValuePairsInRawItemData(rawSingleItemIrregularSeperatorSample).size();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void displayOutpitTest() throws Exception{
+
+        String expected = "\n" +
+                "name:     Bread         seen:  6  times\n" +
+                "===============\t\t\t===============\n" +
+                "Price:     1.23         seen:  6  times\n" +
+                "---------------\t\t\t---------------\n" +
+                "\n" +
+                "name:      Milk         seen:  6  times\n" +
+                "===============\t\t\t===============\n" +
+                "Price:     3.23         seen:  5  times\n" +
+                "---------------\t\t\t---------------\n" +
+                "Price:     1.23         seen:  1  time\n" +
+                "---------------\t\t\t---------------\n" +
+                "\n" +
+                "name:    Apples         seen:  4  times\n" +
+                "===============\t\t\t===============\n" +
+                "Price:     0.25         seen:  2  times\n" +
+                "---------------\t\t\t---------------\n" +
+                "Price:     0.23         seen:  2  times\n" +
+                "---------------\t\t\t---------------\n" +
+                "\n" +
+                "name:   Cookies         seen:  8  times\n" +
+                "===============\t\t\t===============\n" +
+                "Price:     2.25         seen:  8  times\n" +
+                "---------------\t\t\t---------------\n" +
+                "\n" +
+                "Errors                  seen:  4  times";
+        String actual = itemParser.displayOutput();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void priceOccurencesSeenTest()
+    {
+        ArrayList<Item> test = new ArrayList<Item>();
+
+        Item item1 = new Item("Milk", 2.89, "Drink", "3/18/2018");
+        Item item2 = new Item("Bread", 2.89,"Food","3/21/2018");
+        Item item3 = new Item("Bread", 2.79, "Food", "3/24/2018");
+
+        test.add(item1);
+        test.add(item2);
+
+        int expected= 2;
+        int actual = itemParser.priceOccurencesSeen(test, 2.89);
+
+        Assert.assertEquals(expected, actual);
+
+    }
+
+
 }
